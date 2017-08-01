@@ -26,3 +26,4 @@ When in the CLI run the below to execute the command and begin the prompts
 ```bash
 php artisan migrate:env
 ```
+<img src="https://jamie-sefton.co.uk/external/migrate-env.gif" width="100%">
