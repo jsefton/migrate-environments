@@ -41,5 +41,5 @@ When in the CLI run the below to execute the command and begin the prompts
 php artisan migrate:env
 ```
 
-<img src="https://jamie-sefton.co.uk/external/migrate-env-2.gif" width="100%">
+<img src="https://jamie-sefton.co.uk/external/migrate-env-3.gif" width="100%">
 
