@@ -27,3 +27,8 @@ When in the CLI run the below to execute the command and begin the prompts
 php artisan migrate:env
 ```
 <img src="https://jamie-sefton.co.uk/external/migrate-env-2.gif" width="100%">
+
+
+### TODO
+
+- Convert into package with service provider to register command
