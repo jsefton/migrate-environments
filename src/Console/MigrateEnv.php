@@ -56,7 +56,7 @@ class MigrateEnv extends Command
     public function handle()
     {
         // Ask for environment target (simply add more to support additional environment targets)
-        $this->env = $this->choice('Please select an environment target?', ['Local', 'QA', 'Production']);
+        $this->env = $this->choice('Please select an environment target?', config('migrate-env.environments'));
         $this->info('Environment: ' . $this->env);
 
         // Stored json file of credentials (Note the storage folder should be ignored by git, therefore not committed)

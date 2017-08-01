@@ -20,6 +20,10 @@ class MigrateEnvironmentsProvider extends ServiceProvider
                 MigrateEnv::class
             ]);
         }
+
+        $this->publishes([
+            __DIR__.'/../config/migrate-env.php' => config_path('migrate-env.php')
+        ], 'migrate.env');
     }
 
     /**
