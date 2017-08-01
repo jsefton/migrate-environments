@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace Jsefton\MigrateEnvironments\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
