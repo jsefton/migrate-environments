@@ -1,6 +1,9 @@
 {
     "name": "jsefton/migrate-environments",
+    "type": "library",
     "description": "Allows you to target additional environments to run migrations",
+    "keywords": ["laravel","migrate","migrations","environment"],
+    "homepage": "https://github.com/jsefton/migrate-environments",
     "license": "MIT",
     "authors": [
         {
@@ -8,10 +11,12 @@
             "email": "info@jamie-sefton.co.uk"
         }
     ],
-    "autoload": {
-        "psr-4": {
-            "Jsefton\\MigrateEnvironments": "src/"
-        }
+    "require": {
+        "laravel/framework": ">=5.3.0"
     },
-    "minimum-stability": "dev"
+    "autoload": {
+        "psr-0": {
+            "Jsefton": "src"
+        }
+    }
 }
