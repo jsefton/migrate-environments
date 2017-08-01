@@ -24,6 +24,15 @@ Add the below into your `config/app.php` within `providders` array
 Jsefton\MigrateEnvironments\MigrateEnvironmentsProvider::class
 ```
 
+After installation you will need to publish the config file which will allow you to specify your own list of environments. To do this run:
+
+```bash
+php artisan vendor:publish --tag=migrate.env
+```
+
+This will create the file `config/migrate-env.php` where you can configure your list of environments.
+
+
 ### Usage
 
 When in the CLI run the below to execute the command and begin the prompts
