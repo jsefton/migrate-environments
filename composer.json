@@ -1,0 +1,16 @@
+{
+    "name": "jsefton/migrate-environments",
+    "description": "Allows you to target additional environments to run migrations",
+    "authors": [
+        {
+            "name": "Jamie Sefton",
+            "email": "info@jamie-sefton.co.uk"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Jsefton\\MigrateEnvironments": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
