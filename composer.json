@@ -1,6 +1,7 @@
 {
     "name": "jsefton/migrate-environments",
     "description": "Allows you to target additional environments to run migrations",
+    "license": "MIT",
     "authors": [
         {
             "name": "Jamie Sefton",
