@@ -120,8 +120,19 @@ class MigrateEnv extends Command
             exit;
         }
 
+        // Ask for the choice of command to be ran against the remote connection
+        $task = $this->choice('Please select a migration task to run', ['migrate', 'rollback', 'status', 'refresh', 'reset']);
+
+        // If not running migrate then build up correct syntax
+        if($task !== "migrate") {
+            $task = "migrate:" . $task;
+        }
+
+        // Show output of task about to be ran
+        $this->info('Running task: ' . $task);
+
         // Execute the migrations
-        Artisan::call('migrate', ['--database' => 'mysql_env_migration_temp']);
+        Artisan::call($task, ['--database' => 'mysql_env_migration_temp']);
         $this->info(Artisan::output());
 
     }
