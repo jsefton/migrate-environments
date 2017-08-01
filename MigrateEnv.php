@@ -90,23 +90,38 @@ class MigrateEnv extends Command
             file_put_contents($filePath, json_encode($details));
         }
 
+        // Create temp connection details
+        $tempConnection = [
+            'driver' => 'mysql',
+            'host' => $details['dbHost'],
+            'port' => $details['dbPort'],
+            'database' => $details['dbName'],
+            'username' => $details['dbUser'],
+            'password' => $details['dbPassword'],
+            'unix_socket' => '',
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ];
+
         // Set the database connection details for this request.
-        config(['database.connections.mysql.host' => $details['dbHost']]);
-        config(['database.connections.mysql.port' => $details['dbPort']]);
-        config(['database.connections.mysql.database' => $details['dbName']]);
-        config(['database.connections.mysql.username' => $details['dbUser']]);
-        config(['database.connections.mysql.password' => $details['dbPassword']]);
+        config(['database.connections.mysql_env_migration_temp' => $tempConnection]);
+
+        // Attempt to reconnect if previous connection
+        DB::reconnect('mysql_env_migration_temp');
 
         // Test the database connection before doing anything else
         try {
-            DB::connection()->getPdo();
+            DB::connection('mysql_env_migration_temp')->getPdo();
         } catch (\Exception $e) {
             $this->error("Could not connect to the database.  Please check your configuration.");
             exit;
         }
 
         // Execute the migrations
-        Artisan::call('migrate');
+        Artisan::call('migrate', ['--database' => 'mysql_env_migration_temp']);
         $this->info(Artisan::output());
 
     }
