@@ -3,6 +3,7 @@
 namespace Jsefton\MigrateEnvironments;
 
 use Illuminate\Support\ServiceProvider;
+use Jsefton\MigrateEnvironments\Console\MigrateEnv;
 
 class MigrateEnvironmentsProvider extends ServiceProvider
 {
@@ -13,7 +14,12 @@ class MigrateEnvironmentsProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // Register the command
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                MigrateEnv::class
+            ]);
+        }
     }
 
     /**

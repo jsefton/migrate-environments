@@ -10,13 +10,18 @@ The credentials are stored in a JSON file for future use within /storage/app (Th
 
 ### Installation
 
-First copy the `MigrateEnv.php` file into `app/Console/Commands`
+You will need composer to install this package (get composer). Then run:
 
-Next you need to register your command by editing `app/Console/Kernel.php` to add the new command into your `$commands` array.
-```php
-protected $commands = [
-    Commands\MigrateEnv::class
-];
+```bash
+composer require jsefton/migrate-environments
+```
+
+#### Register Service Provider
+
+Add the below into your `config/app.php` within `providders` array
+
+```
+Jsefton\MigrateEnvironments\MigrateEnvironmentsProvider::class
 ```
 
 ### Usage
@@ -29,6 +34,3 @@ php artisan migrate:env
 
 <img src="https://jamie-sefton.co.uk/external/migrate-env-2.gif" width="100%">
 
-### TODO
-
-- Convert into package with service provider to register command
