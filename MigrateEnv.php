@@ -96,6 +96,14 @@ class MigrateEnv extends Command
         config(['database.connections.mysql.username' => $details['dbUser']]);
         config(['database.connections.mysql.password' => $details['dbPassword']]);
 
+        // Test the database connection before doing anything else
+        try {
+            DB::connection()->getPdo();
+        } catch (\Exception $e) {
+            $this->error("Could not connect to the database.  Please check your configuration.");
+            exit;
+        }
+
         // Execute the migrations
         Artisan::call('migrate');
         $this->info(Artisan::output());
