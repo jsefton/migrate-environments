@@ -66,6 +66,8 @@ If you have saved connection details then you can save time with:
 php artisan migrate:env --env=Local --stored=true --task=migrate:status
 ```
 
+You can also run extra artisan commands such as `db:seed` by selecting a task of `custom` which will then prompt for the task you want to run.
+
 
 
 <img src="https://jamie-sefton.co.uk/external/migrate-env-3.gif" width="100%">
