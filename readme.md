@@ -41,5 +41,32 @@ When in the CLI run the below to execute the command and begin the prompts
 php artisan migrate:env
 ```
 
+If you don't want to enter data through prompt questions, you can use arguments to pass in all the needed data. The following arguments are available:
+
+```bash
+--env[=ENV]            
+--stored[=STORED]
+--host[=HOST]
+--database[=DATABASE]
+--username[=USERNAME]
+--password[=PASSWORD]
+--port[=PORT]
+--task[=TASK]
+```
+
+Full usage example with arguments:
+
+```bash
+php artisan migrate:env --env=Local --host=192.168.10.10 --database=testing --username=homestead --password=secret --task=migrate:status
+```
+
+If you have saved connection details then you can save time with:
+
+```bash
+php artisan migrate:env --env=Local --stored=true --task=migrate:status
+```
+
+
+
 <img src="https://jamie-sefton.co.uk/external/migrate-env-3.gif" width="100%">
 

@@ -13,7 +13,7 @@ class MigrateEnv extends Command
      *
      * @var string
      */
-    protected $signature = 'migrate:env';
+    protected $signature = 'migrate:env {--env=} {--stored=} {--host=} {--database=} {--username=} {--password=} {--port=3306} {--task=}';
 
     /**
      * The console command description.
@@ -39,6 +39,19 @@ class MigrateEnv extends Command
     protected $dbPort = 3306;
 
     /**
+     * Used to track what task to run
+     * @var
+     */
+    protected $task;
+
+    /**
+     * Option to use stored details
+     * @var bool
+     */
+    protected $useStored = false;
+
+
+    /**
      * Create a new command instance.
      *
      * @return void
@@ -48,6 +61,41 @@ class MigrateEnv extends Command
         parent::__construct();
     }
 
+    protected function processOptions()
+    {
+        if($this->option('env')) {
+            $this->env = $this->option('env');
+        }
+
+        if($this->option('stored')) {
+            $this->useStored = true;
+        }
+
+        if($this->option('host')) {
+            $this->dbHost = $this->option('host');
+        }
+
+        if($this->option('database')) {
+            $this->dbName = $this->option('database');
+        }
+
+        if($this->option('username')) {
+            $this->dbUser = $this->option('username');
+        }
+
+        if($this->option('password')) {
+            $this->dbPassword = $this->option('password');
+        }
+
+        if($this->option('port')) {
+            $this->dbPort = $this->option('port');
+        }
+
+        if($this->option('task')) {
+            $this->task = $this->option('task');
+        }
+    }
+
     /**
      * Execute the console command.
      *
@@ -55,27 +103,51 @@ class MigrateEnv extends Command
      */
     public function handle()
     {
+        $this->processOptions();
+
         // Ask for environment target (simply add more to support additional environment targets)
-        $this->env = $this->choice('Please select an environment target?', config('migrate-env.environments'));
-        $this->info('Environment: ' . $this->env);
+        if(!$this->env) {
+            $this->env = $this->choice('Please select an environment target?', config('migrate-env.environments'));
+            $this->info('Environment: ' . $this->env);
+        }
 
         // Stored json file of credentials (Note the storage folder should be ignored by git, therefore not committed)
-        $filePath = storage_path() . "/app/db-migration-" . $this->env . ".json";
+        $filePath = storage_path() . "/app/db-migration-" . str_slug($this->env) . ".json";
 
         // Check if we have previously saved details for the set environment
         if(file_exists($filePath)) {
-            if ($this->confirm('Settings for this environment have been found, do you want to use stored settings?')) {
+            if($this->useStored) {
                 $details = json_decode(file_get_contents($filePath), true);
+            } else {
+                if(!$this->dbHost) {
+                    if ($this->confirm('Settings for this environment have been found, do you want to use stored settings?')) {
+                        $details = json_decode(file_get_contents($filePath), true);
+                    }
+                }
             }
         }
 
         // If not stored, or said no to using stored details, then re-ask for all the needed information
         if(!isset($details)) {
-            $this->dbHost = $this->ask('Please enter the Database Host');
-            $this->dbName = $this->ask('Please enter the Database Name');
-            $this->dbUser = $this->ask('Please enter the Database User');
-            $this->dbPassword = $this->secret('Please enter the Database Password');
-            $this->dbPort = $this->ask('Please enter the Database Port (default: 3306)', 3306);
+            if(!$this->dbHost) {
+                $this->dbHost = $this->ask('Please enter the Database Host');
+            }
+
+            if(!$this->dbName) {
+                $this->dbName = $this->ask('Please enter the Database Name');
+            }
+
+            if(!$this->dbUser) {
+                $this->dbUser = $this->ask('Please enter the Database User');
+            }
+
+            if(!$this->dbPassword) {
+                $this->dbPassword = $this->secret('Please enter the Database Password');
+            }
+
+            if(!$this->dbPort) {
+                $this->dbPort = $this->ask('Please enter the Database Port (default: 3306)', 3306);
+            }
 
             $details = [
                 'env' => $this->env,
@@ -120,12 +192,17 @@ class MigrateEnv extends Command
             exit;
         }
 
-        // Ask for the choice of command to be ran against the remote connection
-        $task = $this->choice('Please select a migration task to run', ['migrate', 'rollback', 'status', 'refresh', 'reset']);
 
-        // If not running migrate then build up correct syntax
-        if($task !== "migrate") {
-            $task = "migrate:" . $task;
+        if($this->task) {
+            $task = $this->task;
+        } else {
+            // Ask for the choice of command to be ran against the remote connection
+            $task = $this->choice('Please select a migration task to run', ['migrate', 'rollback', 'status', 'refresh', 'reset']);
+
+            // If not running migrate then build up correct syntax
+            if ($task !== "migrate") {
+                $task = "migrate:" . $task;
+            }
         }
 
         // Show output of task about to be ran
