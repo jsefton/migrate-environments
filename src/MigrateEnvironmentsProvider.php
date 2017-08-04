@@ -24,7 +24,7 @@ class MigrateEnvironmentsProvider extends ServiceProvider
         // Publish config file to config folder
         $this->publishes([
             __DIR__.'/../config/migrate-env.php' => config_path('migrate-env.php')
-        ], 'migrate.env');
+        ], 'migrate-env');
     }
 
     /**
