@@ -18,7 +18,7 @@ composer require jsefton/migrate-environments
 
 #### Register Service Provider
 
-Add the below into your `config/app.php` within `providders` array
+Add the below into your `config/app.php` within `providers` array
 
 ```
 Jsefton\MigrateEnvironments\MigrateEnvironmentsProvider::class
