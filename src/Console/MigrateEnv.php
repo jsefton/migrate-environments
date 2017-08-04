@@ -197,11 +197,15 @@ class MigrateEnv extends Command
             $task = $this->task;
         } else {
             // Ask for the choice of command to be ran against the remote connection
-            $task = $this->choice('Please select a migration task to run', ['migrate', 'rollback', 'status', 'refresh', 'reset']);
+            $task = $this->choice('Please select a migration task to run', ['migrate', 'rollback', 'status', 'refresh', 'reset', 'custom']);
 
             // If not running migrate then build up correct syntax
             if ($task !== "migrate") {
-                $task = "migrate:" . $task;
+                if($task === "custom") {
+                    $task = $this->ask('Please enter the command you want to run (e.g. db:seed)');
+                } else {
+                    $task = "migrate:" . $task;
+                }
             }
         }
 
