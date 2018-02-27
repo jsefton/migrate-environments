@@ -1,9 +1,9 @@
 <?php
 
-namespace Jsefton\MigrateEnvironments;
+namespace JSefton\MigrateEnv;
 
 use Illuminate\Support\ServiceProvider;
-use Jsefton\MigrateEnvironments\Console\MigrateEnv;
+use JSefton\MigrateEnv\Console\MigrateEnv;
 
 class MigrateEnvironmentsProvider extends ServiceProvider
 {
