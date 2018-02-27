@@ -1,27 +1,33 @@
 {
-    "name": "jsefton/migrate-environments",
-    "type": "library",
-    "description": "Allows you to target additional environments to run migrations",
-    "keywords": ["laravel","migrate","migrations","environment"],
-    "homepage": "https://github.com/jsefton/migrate-environments",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Jamie Sefton",
-            "email": "info@jamie-sefton.co.uk"
-        }
-    ],
-    "require": {
-        "laravel/framework": "5.3.* | 5.4.* | 5.5.* | 5.6.*"
-    },
-    "autoload": {
-        "psr-0": {
-            "JSefton\\MigrateEnv": "src"
-        }
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "php artisan vendor:publish --tag=migrate.env"
-        ]
+  "name": "jsefton/migrate-environments",
+  "type": "library",
+  "description": "Allows you to target additional environments to run migrations",
+  "keywords": ["laravel","migrate","migrations","environment"],
+  "homepage": "https://github.com/jsefton/migrate-environments",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Jamie Sefton",
+      "email": "info@jamie-sefton.co.uk"
     }
+  ],
+  "require": {
+    "laravel/framework": "5.3.* | 5.4.* | 5.5.* | 5.6.*"
+  },
+  "archive": {
+    "exclude": [
+      "/tests",
+      "tests",
+      "tests/*.*",
+      "phpunit.xml",
+      ".gitignore",
+      ".gitattributes",
+      "README.md"
+    ]
+  },
+  "autoload": {
+    "psr-4": {
+      "JSefton\\MigrateEnv\\": "src/"
+    }
+  }
 }
