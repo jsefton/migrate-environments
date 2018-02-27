@@ -21,7 +21,7 @@ composer require jsefton/migrate-environments
 Add the below into your `config/app.php` within `providers` array
 
 ```
-Jsefton\MigrateEnvironments\MigrateEnvironmentsProvider::class
+JSefton\MigrateEnv\MigrateEnvironmentsProvider::class
 ```
 
 After installation you will need to publish the config file which will allow you to specify your own list of environments. To do this run:
